@@ -1,0 +1,42 @@
+body {
+}
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+}
+p,
+ul {
+  margin: 0;
+  list-style: none;
+  padding: 0;
+}
+
+html {
+  box-sizing: border-box;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.App {
+  /* margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 40px; */
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 16px;
+  padding-bottom: 24px;
+}
