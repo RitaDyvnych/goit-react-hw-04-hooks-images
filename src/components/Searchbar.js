@@ -1,33 +1,27 @@
-import React, { Component } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import style from "./styles.module.css";
 
-export default class Searchbar extends Component {
-  state = {
-    find: "",
+export default function Searchbar({ onSubmit }) {
+  const [find, setFind] = useState("");
+
+  const handleChangeInput = (e) => {
+    setFind(e.target.value);
   };
 
-  handleChangeInput = (e) => {
-    this.setState({
-      find: e.target.value,
-    });
-  };
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.find.trim() === "") {
+    if (find.trim() === "") {
       alert("Please type searchihg query");
       return;
     }
-    this.props.onSubmit(this.state.find);
-    this.setState({ find: "" });
+    onSubmit(find);
+    setFind("");
   };
 
-  render() {
-    const { find } = this.state;
-    return (
+  return (
       <header className={style.Searchbar}>
-        <form className={style.SearchForm} onSubmit={this.handleSubmit}>
+        <form className={style.SearchForm} onSubmit={handleSubmit}>
           <button type="submit" className={style.SearchForm__button}>
             <span className={style.SearchForm__buttonLabel}>Search</span>
           </button>
@@ -39,12 +33,11 @@ export default class Searchbar extends Component {
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
-            onChange={this.handleChangeInput}
+            onChange={handleChangeInput}
           />
         </form>
       </header>
     );
-  }
 }
 
 Searchbar.propTypes = {
