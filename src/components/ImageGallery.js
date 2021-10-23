@@ -15,14 +15,28 @@ export default function ImageGallery() {
   const [searchImg, setSearchImg] = useState("");
 
   useEffect(() => {
-    if (searchImg.trim() === "") { return;}
+    if(searchImg === ''){return;}
     setStatus("pending");
     ImagesApiService(searchImg,page)
         .then((data) => {
-          if (data.hits.length > 0 && page===1) {
+          if (data.hits.length > 0) {
             setImgArray(data.hits);
             setStatus("success");
-          } else if (page > 1) {
+          }
+          else {
+            setStatus("error");
+          }
+        })
+        .catch((error) => {
+          setStatus("error");
+        });
+  }, [searchImg]);
+
+  useEffect(() => {
+    if(page === 1){return;}
+    ImagesApiService(searchImg,page)
+        .then((data) => {
+            if (data.hits.length > 0) {
             setImgArray((prev) => [...prev, ...data.hits]);
             setStatus("success");
             onPageScroll();
@@ -34,7 +48,7 @@ export default function ImageGallery() {
         .catch((error) => {
           setStatus("error");
         });
-  }, [searchImg, page]);
+  }, [page]);
 
   const onPageScroll = () => {
     window.scrollTo({
